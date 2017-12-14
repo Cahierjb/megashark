@@ -13,9 +13,9 @@ class AddReleaseDateToMovies extends AbstractMigration
     public function change()
     {
         $table = $this->table('movies');
-        $table->addColumn('Release_Date', 'date', [
+        $table->addColumn('releasedate', 'date', [
             'default' => null,
-            'null' => false,
+            'null' => true,
         ]);
         $table->update();
     }
