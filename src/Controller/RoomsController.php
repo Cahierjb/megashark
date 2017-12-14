@@ -2,6 +2,8 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\ORM\TableRegistry;
+use Cake\I18n\Time;
 
 /**
  * Rooms Controller
@@ -34,11 +36,15 @@ class RoomsController extends AppController
      */
     public function view($id = null)
     {
-        $room = $this->Rooms->get($id, [
-            'contain' => []
-        ]);
-
-        $this->set('room', $room);
+        $showtimes =$this
+            ->Rooms
+            ->Showtimes
+            ->find()
+            ->contain(['Movies'])
+            ->where(['room_id' => $id],['strart >=git' => new Time()]);
+        $room = $this->Rooms->get($id,['contains' =>['Showtimes']]);
+        $this->set(compact('showtimes',$showtimes));
+        $this->set(compact('room', $room));
         $this->set('_serialize', ['room']);
     }
 
